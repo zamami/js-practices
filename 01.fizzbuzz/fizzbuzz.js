@@ -1,12 +1,12 @@
-let nums = [...Array(20)].map((_, i) => i + 1);
+const nums = [...Array(20)].map((_, i) => i + 1);
 
-for (let num of nums) {
+for (const num of nums) {
   if (num % 15 === 0) {
-    console.log("fizzbuzz");
+    console.log("FizzBuzz");
   } else if (num % 3 === 0) {
-    console.log("fizz");
+    console.log("Fizz");
   } else if (num % 5 === 0) {
-    console.log("buzz");
+    console.log("Buzz");
   } else {
     console.log(num);
   }
