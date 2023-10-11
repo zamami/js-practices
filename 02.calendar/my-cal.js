@@ -32,3 +32,4 @@ for (let i = 0; i < days.length; i += oneWeek) {
   const week = days.slice(i, i + oneWeek);
   console.log(week.join(" "));
 }
+process.stdout.write("\n");
