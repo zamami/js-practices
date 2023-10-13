@@ -9,7 +9,7 @@ const year = argv.y || now.getFullYear();
 const lastDate = new Date(year, month, 0).getDate();
 
 // 月の期間を作成
-let days = [];
+const days = [];
 for (let i = 1; i < lastDate + 1; i++) {
   if (i < 10) {
     i = " " + i.toString();
@@ -18,8 +18,7 @@ for (let i = 1; i < lastDate + 1; i++) {
 }
 
 // 月初の曜日を取得（0から6の整数)
-const firstDayOfMonth = new Date(year, month - 1, 1);
-const dayOfWeek = firstDayOfMonth.getDay();
+const dayOfWeek = (new Date(year, month - 1, 1)).getDay();
 
 // 曜日のスタート位置の分だけ、空白をdaysに入れる
 for (let i = 0; i < dayOfWeek; i++) {
