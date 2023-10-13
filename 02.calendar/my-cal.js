@@ -1,8 +1,9 @@
 import minimist from "minimist";
 
 const argv = minimist(process.argv.slice(2));
-const month = argv["m"] || new Date().getMonth() + 1;
-const year = argv["y"] || new Date().getFullYear();
+const now = new Date();
+const month = argv.m|| now.getMonth() + 1;
+const year = argv.y || now.getFullYear();
 
 // 月末日を取得
 const lastDate = new Date(year, month, 0).getDate();
