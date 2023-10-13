@@ -28,9 +28,9 @@ for (let i = 0; i < dayOfWeek; i++) {
 console.log(`       ${month}月 ${year}`);
 console.log("日 月 火 水 木 金 土");
 
-const oneWeek = 7; // ７日ごとに区切り、要素をくっつけて表示
-for (let i = 0; i < formattedDays.length; i += oneWeek) {
-  const week = formattedDays.slice(i, i + oneWeek);
-  console.log(week.join(" "));
+const daysPerWeek = 7; // 1週間の日数で区切り、要素をくっつけて表示
+for (let i = 0; i < formattedDays.length; i += daysPerWeek) {
+  const weekDays = formattedDays.slice(i, i + daysPerWeek); // １週間分の日付
+  console.log(weekDays.join(" "));
 }
-process.stdout.write("\n");
+console.log()
