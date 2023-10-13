@@ -2,7 +2,7 @@ import minimist from "minimist";
 
 const argv = minimist(process.argv.slice(2));
 const now = new Date();
-const month = argv.m|| now.getMonth() + 1;
+const month = argv.m || now.getMonth() + 1;
 const year = argv.y || now.getFullYear();
 
 // 月末日を取得
@@ -18,7 +18,7 @@ for (let i = 1; i < lastDate + 1; i++) {
 }
 
 // 月初の曜日を取得（0から6の整数)
-const dayOfWeek = (new Date(year, month - 1, 1)).getDay();
+const dayOfWeek = new Date(year, month - 1, 1).getDay();
 
 // 曜日のスタート位置の分だけ、空白をdaysに入れる
 for (let i = 0; i < dayOfWeek; i++) {
@@ -33,4 +33,4 @@ for (let i = 0; i < formattedDays.length; i += daysPerWeek) {
   const weekDays = formattedDays.slice(i, i + daysPerWeek); // １週間分の日付
   console.log(weekDays.join(" "));
 }
-console.log()
+console.log();
