@@ -2,26 +2,22 @@ import minimist from "minimist";
 
 const argv = minimist(process.argv.slice(2));
 const now = new Date();
-const month = argv.m || now.getMonth() + 1;
-const year = argv.y || now.getFullYear();
+const month = argv.m ?? now.getMonth() + 1;
+const year = argv.y ?? now.getFullYear();
 
-// 月末日を取得
-const lastDate = new Date(year, month, 0).getDate();
+const lastDate = new Date(year, month, 0);
 
-// 月の期間を作成
+// 月末日を取得し、月の期間を作成
 const formattedDays = [];
-for (let i = 1; i < lastDate + 1; i++) {
-  if (i < 10) {
-    i = " " + i.toString();
-  } // 1~9の見た目調整
-  formattedDays.push(i.toString());
+for (let i = 1; i < lastDate.getDate() + 1; i++) {
+  const day = i < 10 ? ` ${i}` : i.toString();
+  formattedDays.push(day);
 }
 
-// 月初の曜日を取得（0から6の整数)
-const dayOfWeek = new Date(year, month - 1, 1).getDay();
+const firstDate = new Date(year, month - 1, 1);
 
-// 曜日のスタート位置の分だけ、空白をdaysに入れる
-for (let i = 0; i < dayOfWeek; i++) {
+// 月初の曜日を取得し（0から6の整数)、曜日のスタート位置の分だけ、空白をdaysに入れる
+for (let i = 0; i < firstDate.getDay(); i++) {
   formattedDays.unshift("  ");
 }
 
