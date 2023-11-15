@@ -15,7 +15,7 @@ db.run(
                 }
                 console.log(`ID番号${this.lastID}`);
                 db.get(
-                    "SELECT * FROM books WHERE id = ?",
+                    "SELECT * FROM hogehoge WHERE id = ?",
                     [this.lastID],
                     (err, row) => {
                         if (err) {
@@ -24,7 +24,7 @@ db.run(
                         }
                         console.log(row);
                         //no such table 発生
-                        db.run("DROP TABLE hogehoge", (err) => {
+                        db.run("DROP TABLE books", (err) => {
                             if (err) {
                                 console.error(err.message);
                                 return;
