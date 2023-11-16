@@ -1,29 +1,21 @@
+// Promiseエラーなし
+
 import sqlite3 from "sqlite3";
 
 const db = new (sqlite3.verbose().Database)(":memory:");
 
 const runQuery = (query, params = []) => {
-  return new Promise((resolve, reject) => {
-    db.run(query, params, function (err) {
-      if (err) {
-        console.error(err.message);
-        reject(err);
-      } else {
-        resolve(this.lastID);
-      }
+  return new Promise((resolve) => {
+    db.run(query, params, function () {
+      resolve(this.lastID);
     });
   });
 };
 
 const getQuery = (query, params = []) => {
-  return new Promise((resolve, reject) => {
-    db.get(query, params, (err, row) => {
-      if (err) {
-        console.error(err.message);
-        reject(err);
-      } else {
-        resolve(row);
-      }
+  return new Promise((resolve) => {
+    db.get(query, params, (_, row) => {
+      resolve(row);
     });
   });
 };

@@ -6,7 +6,7 @@ db.run(
   () => {
     db.run(
       "INSERT INTO books(title) VALUES (?)",
-      null, // NOT NULL 発生
+      "callbackエラーあり",
 
       function (err) {
         if (err) {
@@ -15,7 +15,7 @@ db.run(
         }
         console.log(`ID番号${this.lastID}`);
         db.get(
-          "SELECT * FROM hogehoge WHERE id = ?",
+          "SELECT * FROM books WHERE id = ?",
           [this.lastID],
           (err, row) => {
             if (err) {
@@ -23,7 +23,6 @@ db.run(
               return;
             }
             console.log(row);
-            //no such table 発生
             db.run("DROP TABLE books", (err) => {
               if (err) {
                 console.error(err.message);
