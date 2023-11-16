@@ -1,37 +1,46 @@
 import sqlite3 from "sqlite3";
+
 const db = new (sqlite3.verbose().Database)(":memory:");
 
-const run = (query, params = []) => {
-  return new Promise((resolve) => {
-    db.run(query, params, function () {
-      return resolve(this);
+const runQuery = (query, params = []) => {
+  return new Promise((resolve, reject) => {
+    db.run(query, params, function (err) {
+      if (err) {
+        console.error(err.message);
+        reject(err);
+      } else {
+        resolve(this.lastID);
+      }
     });
   });
 };
 
-const get = (query, params = []) => {
-  return new Promise((resolve) => {
-    db.get(query, params, function (err, row) {
-      resolve(row);
+const getQuery = (query, params = []) => {
+  return new Promise((resolve, reject) => {
+    db.get(query, params, (err, row) => {
+      if (err) {
+        console.error(err.message);
+        reject(err);
+      } else {
+        resolve(row);
+      }
     });
   });
 };
 
-const createTableQuery =
-  "CREATE TABLE books (id INTEGER PRIMARY KEY AUTOINCREMENT, title TEXT NOT NULL UNIQUE )";
-const insertRowQuery = "INSERT INTO books(title) VALUES (?)";
-const selectRowQuery = "SELECT * FROM books WHERE id = ?";
-const dropRowQuery = "DROP TABLE books";
-run(createTableQuery)
-  .then(() => run(insertRowQuery, "Promiseエラーなし"))
-  .then(function (res) {
-    console.log(`ID番号${res.lastID}`);
-    return get(selectRowQuery, [res.lastID]);
+runQuery(
+  "CREATE TABLE books (id INTEGER PRIMARY KEY AUTOINCREMENT, title TEXT NOT NULL UNIQUE )"
+)
+  .then(() =>
+    runQuery("INSERT INTO books(title) VALUES (?)", ["Promiseエラーなし"])
+  )
+  .then((lastID) => {
+    console.log(`ID番号${lastID}`);
+    return getQuery("SELECT * FROM books WHERE id = ?", [lastID]);
   })
   .then((row) => {
     console.log(row);
-    return run(dropRowQuery);
+    return runQuery("DROP TABLE books");
   })
-  .then(() => {
-    db.close();
-  });
+  .then(() => db.close())
+  .catch((err) => console.error(err.message));
