@@ -12,7 +12,7 @@ db.run(
         db.get(
           "SELECT * FROM books WHERE id = ?",
           [this.lastID],
-          (err, row) => {
+          (_, row) => {
             console.log(row);
             db.run("DROP TABLE books", () => {
               db.close();
