@@ -6,28 +6,20 @@ db.run(
   "CREATE TABLE books (id INTEGER PRIMARY KEY AUTOINCREMENT, title TEXT NOT NULL UNIQUE)",
   () => {
     db.run(
-      "INSERT INTO books (title) VALUES (?)",
+      "INSERT INTO hogehoge (title) VALUES (?)",
       "callbackエラーあり",
       function (err) {
         if (err) {
           console.error(err.message);
-          return;
         }
-        console.log(`ID番号${this.lastID}`);
         db.get(
-          "SELECT * FROM books WHERE id = ?",
-          [this.lastID],
-          (err, row) => {
+          "SELECT * FROM hugahuga WHERE id = ?",
+          [1],
+          (err) => {
             if (err) {
               console.error(err.message);
-              return;
             }
-            console.log(row);
-            db.run("DROP TABLE books", (err) => {
-              if (err) {
-                console.error(err.message);
-                return;
-              }
+            db.run("DROP TABLE books", () => {
               db.close();
             });
           }
