@@ -1,5 +1,3 @@
-// Promiseエラーなし
-
 import sqlite3 from "sqlite3";
 
 const db = new (sqlite3.verbose().Database)(":memory:");
@@ -35,4 +33,3 @@ runQuery(
     return runQuery("DROP TABLE books");
   })
   .then(() => db.close())
-  .catch((err) => console.error(err.message));
