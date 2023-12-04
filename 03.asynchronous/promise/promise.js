@@ -1,45 +1,21 @@
-// Promiseエラーあり
-import sqlite3 from "sqlite3";
-
-const db = new (sqlite3.verbose().Database)(":memory:");
-
-export const runQuery = (query, params = []) => {
-  return new Promise((resolve, reject) => {
-    db.run(query, params, function (err) {
-      if (err) {
-        reject(err);
-      } else {
-        resolve(this.lastID);
-      }
-    });
-  });
-};
-
-export const getQuery = (query, params = []) => {
-  return new Promise((resolve, reject) => {
-    db.get(query, params, (err, row) => {
-      if (err) {
-        reject(err);
-      } else {
-        resolve(row);
-      }
-    });
-  });
-};
-
+import { db, runQuery, getQuery} from "./promise_module.js";
 runQuery(
   "CREATE TABLE books (id INTEGER PRIMARY KEY AUTOINCREMENT, title TEXT NOT NULL UNIQUE )"
 )
   .then(() =>
-    runQuery("INSERT INTO books(title) VALUES (?)", ["promiseエラーあり"])
+    runQuery("INSERT INTO hogehoge (title) VALUES (?)", ["promiseエラーあり"])
   )
-  .then((lastID) => {
-    console.log(`ID番号${lastID}`);
-    return getQuery("SELECT * FROM books WHERE id = ?", [lastID]);
+  .catch((err)=>{
+    console.error(`${err.message}`);
+    return Promise.resolve();
   })
-  .then((row) => {
-    console.log(row);
+  .then(() => {
+    return getQuery("SELECT * FROM hugahuga WHERE id = ?", [1]);
+  })
+  .catch((err)=>{
+    console.error(`${err.message}`);
+  })
+  .then(() => {
     return runQuery("DROP TABLE books");
   })
-  .then(() => db.close())
-  .catch((err) => console.error(err.message));
+  .then(() => db.close());
