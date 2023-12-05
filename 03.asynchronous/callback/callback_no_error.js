@@ -9,16 +9,12 @@ db.run(
       "callbackエラーなし",
       function () {
         console.log(`ID番号${this.lastID}`);
-        db.get(
-          "SELECT * FROM books WHERE id = ?",
-          [this.lastID],
-          (_, row) => {
-            console.log(row);
-            db.run("DROP TABLE books", () => {
-              db.close();
-            });
-          }
-        );
+        db.get("SELECT * FROM books WHERE id = ?", [this.lastID], (_, row) => {
+          console.log(row);
+          db.run("DROP TABLE books", () => {
+            db.close();
+          });
+        });
       }
     );
   }

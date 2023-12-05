@@ -1,4 +1,4 @@
-import { db, runQuery, getQuery} from "./promise_module.js";
+import { db, runQuery, getQuery } from "./promise_module.js";
 
 runQuery(
   "CREATE TABLE books (id INTEGER PRIMARY KEY AUTOINCREMENT, title TEXT NOT NULL UNIQUE )"
@@ -14,4 +14,4 @@ runQuery(
     console.log(row);
     return runQuery("DROP TABLE books");
   })
-  .then(() => db.close())
+  .then(() => db.close());

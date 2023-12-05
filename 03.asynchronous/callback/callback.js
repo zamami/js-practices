@@ -12,18 +12,14 @@ db.run(
         if (err) {
           console.error(err.message);
         }
-        db.get(
-          "SELECT * FROM hugahuga WHERE id = ?",
-          [1],
-          (err) => {
-            if (err) {
-              console.error(err.message);
-            }
-            db.run("DROP TABLE books", () => {
-              db.close();
-            });
+        db.get("SELECT * FROM hugahuga WHERE id = ?", [1], (err) => {
+          if (err) {
+            console.error(err.message);
           }
-        );
+          db.run("DROP TABLE books", () => {
+            db.close();
+          });
+        });
       }
     );
   }
