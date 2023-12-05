@@ -1,22 +1,4 @@
-import sqlite3 from "sqlite3";
-
-const db = new (sqlite3.verbose().Database)(":memory:");
-
-const runQuery = async (query, params = []) => {
-  return new Promise((resolve) => {
-    db.run(query, params, function () {
-      resolve(this.lastID);
-    });
-  });
-};
-
-const getQuery = async (query, params = []) => {
-  return new Promise((resolve) => {
-    db.get(query, params, (_, row) => {
-      resolve(row);
-    });
-  });
-};
+import {runQuery, getQuery, db} from "../async/async_module.js";
 
 const main = async () => {
   await runQuery(
