@@ -14,6 +14,7 @@ runQuery(
   })
   .catch((err) => {
     console.error(`${err.message}`);
+    return Promise.resolve();
   })
   .then(() => {
     return runQuery("DROP TABLE books");
