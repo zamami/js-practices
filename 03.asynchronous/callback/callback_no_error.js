@@ -2,10 +2,10 @@ import sqlite3 from "sqlite3";
 
 const db = new (sqlite3.verbose().Database)(":memory:");
 db.run(
-  "CREATE TABLE books (id INTEGER PRIMARY KEY AUTOINCREMENT, title TEXT NOT NULL UNIQUE )",
+  "CREATE TABLE books (id INTEGER PRIMARY KEY AUTOINCREMENT, title TEXT NOT NULL UNIQUE)",
   () => {
     db.run(
-      "INSERT INTO books(title) VALUES (?)",
+      "INSERT INTO books (title) VALUES (?)",
       "callbackエラーなし",
       function () {
         console.log(`ID番号${this.lastID}`);
