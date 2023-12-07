@@ -5,21 +5,19 @@ async function main() {
     "CREATE TABLE books (id INTEGER PRIMARY KEY AUTOINCREMENT, title TEXT NOT NULL UNIQUE )"
   );
   try {
-    const insertQuery = await runQuery(
-      "INSERT INTO hogehoge (title) VALUES (?)",
-      ["asyncエラーあり"]
-    );
-    console.log(`ID番号${insertQuery.lastID}`);
-    const row = await getQuery("SELECT * FROM hugahuga WHERE id = ?", [
-      insertQuery.lastID,
+    await runQuery("INSERT INTO hogehoge (title) VALUES (?)", [
+      "asyncエラーあり",
     ]);
-    console.log(row);
   } catch (error) {
     console.error(error.message);
-  } finally {
-    await runQuery("DROP TABLE books");
-    db.close();
   }
+  try {
+    await getQuery("SELECT * FROM hugahuga WHERE id = ?", [1]);
+  } catch (error) {
+    console.error(error.message);
+  }
+  await runQuery("DROP TABLE books");
+  db.close();
 }
 
 main();
