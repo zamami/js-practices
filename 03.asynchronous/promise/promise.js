@@ -1,6 +1,7 @@
 import { db, runQuery, getQuery } from "./promise_module.js";
+
 runQuery(
-  "CREATE TABLE books (id INTEGER PRIMARY KEY AUTOINCREMENT, title TEXT NOT NULL UNIQUE )"
+  "CREATE TABLE books (id INTEGER PRIMARY KEY AUTOINCREMENT, title TEXT NOT NULL UNIQUE)"
 )
   .then(() =>
     runQuery("INSERT INTO hogehoge (title) VALUES (?)", ["promiseエラーあり"])

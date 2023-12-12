@@ -2,7 +2,7 @@ import { runQuery, getQuery, db } from "../async/async_module.js";
 
 async function main() {
   await runQuery(
-    "CREATE TABLE books (id INTEGER PRIMARY KEY AUTOINCREMENT, title TEXT NOT NULL UNIQUE )"
+    "CREATE TABLE books (id INTEGER PRIMARY KEY AUTOINCREMENT, title TEXT NOT NULL UNIQUE)"
   );
   try {
     await runQuery("INSERT INTO hogehoge (title) VALUES (?)", [
