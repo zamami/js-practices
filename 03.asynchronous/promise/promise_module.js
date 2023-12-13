@@ -1,6 +1,6 @@
 import sqlite3 from "sqlite3";
 
-export const db = new (sqlite3.verbose().Database)(":memory:");
+const db = new (sqlite3.verbose().Database)(":memory:");
 
 export const runQuery = (query, params = []) => {
   return new Promise((resolve, reject) => {
@@ -25,3 +25,13 @@ export const getQuery = (query, params = []) => {
     });
   });
 };
+
+export const closeDb = () => new Promise((resolve, reject) => {
+  db.close((err) => {
+    if (err) {
+      reject(err);
+    } else {
+      resolve();
+    }
+  });
+});
