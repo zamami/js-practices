@@ -14,7 +14,7 @@ async function main() {
     }
   }
   try {
-    await getQuery("SELECT * FROM hugahuga WHERE id = ?", [1]);
+    await getQuery("SELECT * FROM fugafuga WHERE id = ?", [1]);
   } catch (err) {
     if(err instanceof  Error){
       console.error(err.message);

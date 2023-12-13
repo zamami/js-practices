@@ -11,7 +11,7 @@ db.run(
         if (err) {
           console.error(err.message);
         }
-        db.get("SELECT * FROM hugahuga WHERE id = ?", [1], (err) => {
+        db.get("SELECT * FROM fugafuga WHERE id = ?", [1], (err) => {
           if (err) {
             console.error(err.message);
           }

@@ -11,7 +11,7 @@ runQuery(
     return Promise.resolve();
   })
   .then(() => {
-    return getQuery("SELECT * FROM hugahuga WHERE id = ?", [1]);
+    return getQuery("SELECT * FROM fugafuga WHERE id = ?", [1]);
   })
   .catch((err) => {
     console.error(`${err.message}`);
