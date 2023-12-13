@@ -1,17 +1,26 @@
-import { closeDb, runQuery, getQuery } from "./promise_module.js";
+import {
+  initializeDatabase,
+  closeDb,
+  runQuery,
+  getQuery,
+} from "./promise_module.js";
 
+const db = initializeDatabase();
 runQuery(
+  db,
   "CREATE TABLE books (id INTEGER PRIMARY KEY AUTOINCREMENT, title TEXT NOT NULL UNIQUE)"
 )
   .then(() =>
-    runQuery("INSERT INTO hogehoge (title) VALUES (?)", ["Promiseエラーあり"])
+    runQuery(db, "INSERT INTO hogehoge (title) VALUES (?)", [
+      "Promiseエラーあり",
+    ])
   )
   .catch((err) => {
     console.error(err.message);
   })
-  .then(() => getQuery("SELECT * FROM fugafuga WHERE id = ?", [1]))
+  .then(() => getQuery(db, "SELECT * FROM fugafuga WHERE id = ?", [1]))
   .catch((err) => {
     console.error(err.message);
   })
-  .then(() => runQuery("DROP TABLE books"))
-  .then(() => closeDb());
+  .then(() => runQuery(db, "DROP TABLE books"))
+  .then(() => closeDb(db));

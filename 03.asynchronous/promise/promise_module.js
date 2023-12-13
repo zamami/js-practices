@@ -1,8 +1,10 @@
 import sqlite3 from "sqlite3";
 
-const db = new (sqlite3.verbose().Database)(":memory:");
+export const initializeDatabase = () => {
+  return new (sqlite3.verbose().Database)(":memory:");
+};
 
-export const runQuery = (query, params = []) => {
+export const runQuery = (db, query, params = []) => {
   return new Promise((resolve, reject) => {
     db.run(query, params, function (err) {
       if (err) {
@@ -14,7 +16,7 @@ export const runQuery = (query, params = []) => {
   });
 };
 
-export const getQuery = (query, params = []) => {
+export const getQuery = (db, query, params = []) => {
   return new Promise((resolve, reject) => {
     db.get(query, params, (err, row) => {
       if (err) {
@@ -26,12 +28,13 @@ export const getQuery = (query, params = []) => {
   });
 };
 
-export const closeDb = () => new Promise((resolve, reject) => {
-  db.close((err) => {
-    if (err) {
-      reject(err);
-    } else {
-      resolve();
-    }
+export const closeDb = (db) =>
+  new Promise((resolve, reject) => {
+    db.close((err) => {
+      if (err) {
+        reject(err);
+      } else {
+        resolve();
+      }
+    });
   });
-});
