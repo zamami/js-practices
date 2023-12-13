@@ -7,7 +7,7 @@ async function main() {
   const insertQuery = await runQuery("INSERT INTO books(title) VALUES (?)", [
     "asyncエラーなし",
   ]);
-  console.log(`ID番号${insertQuery.lastID}`);
+  console.log(insertQuery.lastID);
   const row = await getQuery("SELECT * FROM books WHERE id = ?", [
     insertQuery.lastID,
   ]);

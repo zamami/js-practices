@@ -7,7 +7,7 @@ runQuery(
     runQuery("INSERT INTO books (title) VALUES (?)", ["Promiseエラーなし"])
   )
   .then((result) => {
-    console.log(`ID番号${result.lastID}`);
+    console.log(result.lastID);
     return getQuery("SELECT * FROM books WHERE id = ?", [result.lastID]);
   })
   .then((row) => {
