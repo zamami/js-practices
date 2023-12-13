@@ -7,15 +7,11 @@ runQuery(
     runQuery("INSERT INTO hogehoge (title) VALUES (?)", ["Promiseエラーあり"])
   )
   .catch((err) => {
-    console.error(`${err.message}`);
+    console.error(err.message);
   })
-  .then(() => {
-    return getQuery("SELECT * FROM fugafuga WHERE id = ?", [1]);
-  })
+  .then(() => getQuery("SELECT * FROM fugafuga WHERE id = ?", [1]))
   .catch((err) => {
-    console.error(`${err.message}`);
+    console.error(err.message);
   })
-  .then(() => {
-    return runQuery("DROP TABLE books");
-  })
+  .then(() => runQuery("DROP TABLE books"))
   .then(() => closeDb());
