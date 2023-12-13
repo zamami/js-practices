@@ -4,7 +4,7 @@ runQuery(
   "CREATE TABLE books (id INTEGER PRIMARY KEY AUTOINCREMENT, title TEXT NOT NULL UNIQUE)"
 )
   .then(() =>
-    runQuery("INSERT INTO hogehoge (title) VALUES (?)", ["promiseエラーあり"])
+    runQuery("INSERT INTO hogehoge (title) VALUES (?)", ["Promiseエラーあり"])
   )
   .catch((err) => {
     console.error(`${err.message}`);
