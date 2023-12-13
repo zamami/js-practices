@@ -9,12 +9,16 @@ async function main() {
       "asyncエラーあり",
     ]);
   } catch (err) {
-    console.error(err.message);
+    if(err instanceof Error){
+      console.error(err.message);
+    }
   }
   try {
     await getQuery("SELECT * FROM hugahuga WHERE id = ?", [1]);
   } catch (err) {
-    console.error(err.message);
+    if(err instanceof  Error){
+      console.error(err.message);
+    }
   }
   await runQuery("DROP TABLE books");
   db.close();
