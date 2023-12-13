@@ -7,7 +7,7 @@ db.run(
     db.run(
       "INSERT INTO hogehoge (title) VALUES (?)",
       "callbackエラーあり",
-      function (err) {
+      (err) => {
         if (err) {
           console.error(err.message);
         }
