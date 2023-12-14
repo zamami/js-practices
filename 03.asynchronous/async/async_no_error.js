@@ -1,19 +1,22 @@
-import { runQuery, getQuery, db } from "../async/async_module.js";
+import {
+  initializeDatabase,
+  closeDb,
+  runQuery,
+  getQuery,
+} from "../promise/promise_module.js";
 
-async function main() {
-  await runQuery(
-    "CREATE TABLE books (id INTEGER PRIMARY KEY AUTOINCREMENT, title TEXT NOT NULL UNIQUE)"
-  );
-  const insertQuery = await runQuery("INSERT INTO books(title) VALUES (?)", [
-    "asyncエラーなし",
-  ]);
-  console.log(insertQuery.lastID);
-  const row = await getQuery("SELECT * FROM books WHERE id = ?", [
-    insertQuery.lastID,
-  ]);
-  console.log(row);
-  await runQuery("DROP TABLE books");
-  db.close();
-}
-
-main();
+const db = initializeDatabase();
+await runQuery(
+  db,
+  "CREATE TABLE books (id INTEGER PRIMARY KEY AUTOINCREMENT, title TEXT NOT NULL UNIQUE)"
+);
+const result = await runQuery(db, "INSERT INTO books(title) VALUES (?)", [
+  "asyncエラーなし",
+]);
+console.log(result.lastID);
+const row = await getQuery(db, "SELECT * FROM books WHERE id = ?", [
+  result.lastID,
+]);
+console.log(row);
+await runQuery(db, "DROP TABLE books");
+await closeDb(db);
