@@ -3,7 +3,7 @@ import {
   closeDb,
   runQuery,
   getQuery,
-} from "../promise/promise_module.js";
+} from "../utility_function/databaseUtils.js";
 
 await runQuery(
   db,
