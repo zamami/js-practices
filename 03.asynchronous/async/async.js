@@ -1,11 +1,10 @@
 import {
-  initializeDatabase,
+  db,
   closeDb,
   runQuery,
   getQuery,
 } from "../promise/promise_module.js";
 
-const db = initializeDatabase();
 await runQuery(
   db,
   "CREATE TABLE books (id INTEGER PRIMARY KEY AUTOINCREMENT, title TEXT NOT NULL UNIQUE)"

@@ -1,8 +1,6 @@
 import sqlite3 from "sqlite3";
 
-export const initializeDatabase = () => {
-  return new (sqlite3.verbose().Database)(":memory:");
-};
+export const db = new (sqlite3.verbose().Database)(":memory:");
 
 export const runQuery = (db, query, params = []) => {
   return new Promise((resolve, reject) => {
