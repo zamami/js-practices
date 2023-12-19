@@ -29,6 +29,18 @@ export class MemoModel {
         });
     }
 
+    getAllQuery(query, params = []) {
+        return new Promise((resolve, reject) => {
+            this.db.all(query, params, (err, row) => {
+                if (err) {
+                    reject(err);
+                } else {
+                    resolve(row);
+                }
+            });
+        });
+    }
+
     closeDb() {
         return new Promise((resolve, reject) => {
             this.db.close((err) => {

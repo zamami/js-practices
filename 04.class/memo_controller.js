@@ -4,8 +4,20 @@ export class MemoController {
     constructor() {
         this.memoModel = new MemoModel();
     }
-    showMemos(){
-        console.log('-lオプションが実行されました')
+    async showMemos(){
+        try {
+            const memos = await this.memoModel.getAllQuery("SELECT * FROM memos");
+            memos.forEach(memo => {
+                const firstLine = memo.title.split('\n')[0];
+                console.log(firstLine);
+            });
+        } catch (err) {
+            if (err instanceof Error) {
+                console.error(err.message);
+            }
+        }
+        await this.memoModel.closeDb();
+
     }
 
     showMemo(){
