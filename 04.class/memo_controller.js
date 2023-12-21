@@ -1,5 +1,7 @@
 import {MemoModel} from "./memo_model.js";
+import {MemoStdin} from "./memo_stdin.js";
 
+const memoStdin = new MemoStdin()
 export class MemoController {
     constructor() {
         this.memoModel = new MemoModel();
@@ -20,8 +22,19 @@ export class MemoController {
 
     }
 
-    showMemo(){
-        console.log('-dオプションが実行されました')
+    async showMemo(){
+        try {
+            const memos = await this.memoModel.getAllQuery("SELECT * FROM memos");
+            const selectedMemo = await memoStdin.selectMemo(memos);
+            if (selectedMemo) {
+                console.log(selectedMemo.title);
+            }
+        } catch (err) {
+            if (err instanceof Error) {
+                console.error(err.message);
+            }
+        }
+        await this.memoModel.closeDb();
     }
 
     deleteMemo(){
@@ -30,7 +43,7 @@ export class MemoController {
 
     async addMemo(lines){
         await this.memoModel.runQuery(
-            "CREATE TABLE IF NOT EXISTS memos (id INTEGER PRIMARY KEY AUTOINCREMENT, title TEXT NOT NULL)"
+            "CREATE TABLE IF NOT EXISTS memos (id INTEGER PRIMARY KEY AUTOINCREMENT, title TEXT NOT NULL UNIQUE)"
         );
         try {
             await this.memoModel.runQuery("INSERT INTO memos (title) VALUES (?)", [
