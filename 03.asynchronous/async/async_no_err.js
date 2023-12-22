@@ -1,9 +1,4 @@
-import {
-  db,
-  closeDb,
-  runQuery,
-  getQuery,
-} from "../utility_function/db_methods.js";
+import { db, closeDb, runQuery, getQuery } from "../db_functions.js";
 
 await runQuery(
   db,
