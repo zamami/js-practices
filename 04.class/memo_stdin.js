@@ -27,18 +27,18 @@ export class MemoStdin {
 
     selectMemo(memos){
         return new Promise((resolve) => {
-            const first_lines = memos.map(memo => memo.title.split('\n')[0]);
+            const promptMemos = memos.map(memo => {
+                const firstLine = memo.title.split(`\n`)[0];
+                return { name: memo.title, message: firstLine };
+            })
             const prompt = new Select({
                 name: 'memo',
                 message: 'Choose a note you want to see:',
-                choices: first_lines
+                choices: promptMemos
             });
 
             prompt.run()
-                .then(answer => {
-                    const selectedMemo = memos.find(memo => memo.title.split('\n')[0] === answer);
-                    resolve(selectedMemo);
-                })
+                .then(answer => resolve(answer))
                 .catch(console.error);
         });
     }

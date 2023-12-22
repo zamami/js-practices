@@ -25,10 +25,7 @@ export class MemoController {
     async showMemo(){
         try {
             const memos = await this.memoModel.getAllQuery("SELECT * FROM memos");
-            const selectedMemo = await memoStdin.selectMemo(memos);
-            if (selectedMemo) {
-                console.log(selectedMemo.title);
-            }
+            await memoStdin.selectMemo(memos);
         } catch (err) {
             if (err instanceof Error) {
                 console.error(err.message);
