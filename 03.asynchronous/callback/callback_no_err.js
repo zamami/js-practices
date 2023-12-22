@@ -1,6 +1,5 @@
-import sqlite3 from "sqlite3";
+import { db } from "../utility_function/db_methods.js";
 
-const db = new (sqlite3.verbose().Database)(":memory:");
 db.run(
   "CREATE TABLE books (id INTEGER PRIMARY KEY AUTOINCREMENT, title TEXT NOT NULL UNIQUE)",
   () => {
