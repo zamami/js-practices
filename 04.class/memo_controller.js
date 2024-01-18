@@ -5,6 +5,7 @@ const memoStdin = new MemoStdin();
 export class MemoController {
   constructor() {
     this.memoModel = new MemoModel();
+    this.memoStdin = new MemoStdin();
   }
   async showMemos() {
     try {
@@ -61,5 +62,10 @@ export class MemoController {
       }
     }
     await this.memoModel.closeDb();
+  }
+
+  async handleUserInput() {
+    const lines = await this.memoStdin.showLines();
+    await this.addMemo(lines);
   }
 }
