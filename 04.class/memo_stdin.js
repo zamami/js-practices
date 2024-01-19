@@ -43,4 +43,23 @@ export class MemoStdin {
         .catch(console.error);
     });
   }
+
+  deleteMemo(memos) {
+    return new Promise((resolve) => {
+      const promptMemos = memos.map((memo) => {
+        const firstLine = memo.title.split(`\n`)[0];
+        return { name: memo.id, message: firstLine };
+      });
+      const prompt = new Select({
+        name: "memo",
+        message: "Choose a note you want to delete:",
+        choices: promptMemos,
+      });
+
+      prompt
+        .run()
+        .then((answer) => resolve(answer))
+        .catch(console.error);
+    });
+  }
 }

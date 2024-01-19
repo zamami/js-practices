@@ -41,6 +41,11 @@ export class MemoModel {
     });
   }
 
+  deleteQuery(id) {
+    const sql = "DELETE FROM memos WHERE id = ?";
+    return this.runQuery(sql, [id]);
+  }
+
   closeDb() {
     return new Promise((resolve, reject) => {
       this.db.close((err) => {

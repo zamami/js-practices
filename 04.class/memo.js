@@ -15,4 +15,4 @@ async function main(argv) {
   }
 }
 
-main(argv).catch(err => console.log(err.message));
+main(argv).catch((err) => console.log(err.message));

@@ -34,8 +34,17 @@ export class MemoController {
     await this.memoModel.closeDb();
   }
 
-  deleteMemo() {
-    console.log("-dオプションが実行されました");
+  async deleteMemo() {
+    try {
+      const memos = await this.memoModel.getAllQuery("SELECT * FROM memos");
+      const selectedId = await this.memoStdin.deleteMemo(memos);
+      await this.memoModel.deleteQuery(selectedId);
+    } catch (err) {
+      if (err instanceof Error) {
+        console.error(err.message);
+      }
+    }
+    await this.memoModel.closeDb();
   }
 
   async addMemo(lines) {
