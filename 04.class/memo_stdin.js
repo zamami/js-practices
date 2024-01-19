@@ -25,41 +25,39 @@ export class MemoStdin {
     });
   }
 
-  selectMemo(memos) {
-    return new Promise((resolve) => {
+  createPrompt(memos, message, nameProperty) {
+    return new Promise((resolve, reject) => {
+      if (!memos || memos.length === 0) {
+        reject(new Error("No memos available to display."));
+        return;
+      }
+
       const promptMemos = memos.map((memo) => {
         const firstLine = memo.title.split(`\n`)[0];
-        return { name: memo.title, message: firstLine };
+        return { name: memo[nameProperty], message: firstLine };
       });
+
       const prompt = new Select({
         name: "memo",
-        message: "Choose a note you want to see:",
+        message: message,
         choices: promptMemos,
       });
 
       prompt
-        .run()
-        .then((answer) => resolve(answer))
-        .catch(console.error);
+          .run()
+          .then((answer) => resolve(answer))
+          .catch((error) => {
+            console.error("An error occurred while selecting a memo:", error);
+            reject(error);
+          });
     });
   }
 
-  deleteMemo(memos) {
-    return new Promise((resolve) => {
-      const promptMemos = memos.map((memo) => {
-        const firstLine = memo.title.split(`\n`)[0];
-        return { name: memo.id, message: firstLine };
-      });
-      const prompt = new Select({
-        name: "memo",
-        message: "Choose a note you want to delete:",
-        choices: promptMemos,
-      });
+  selectMemo(memos) {
+    return this.createPrompt(memos, "Choose a note you want to see:", "title");
+  }
 
-      prompt
-        .run()
-        .then((answer) => resolve(answer))
-        .catch(console.error);
-    });
+  deleteMemo(memos) {
+    return this.createPrompt(memos, "Choose a note you want to delete:", "id");
   }
 }
