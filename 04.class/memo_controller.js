@@ -18,7 +18,7 @@ export class MemoController {
         console.log(firstLine);
       });
     } catch (err) {
-        console.error(err.message);
+      console.error(err.message);
     }
     await this.memoModel.closeDb();
   }
@@ -31,7 +31,7 @@ export class MemoController {
       }
       await memoStdin.selectMemo(memos);
     } catch (err) {
-        console.error(err.message);
+      console.error(err.message);
     }
     await this.memoModel.closeDb();
   }
@@ -42,7 +42,7 @@ export class MemoController {
       const selectedId = await this.memoStdin.deleteMemo(memos);
       await this.memoModel.deleteQuery(selectedId);
     } catch (err) {
-        console.error(err.message);
+      console.error(err.message);
     }
     await this.memoModel.closeDb();
   }
@@ -56,7 +56,7 @@ export class MemoController {
         lines.join("\n"),
       ]);
     } catch (err) {
-        console.error(err.message);
+      console.error(err.message);
     }
     try {
       const memo = await this.memoModel.getQuery(
@@ -64,7 +64,7 @@ export class MemoController {
       );
       console.log(`メモを追加しました：${memo.title}`);
     } catch (err) {
-        console.error(err.message);
+      console.error(err.message);
     }
     await this.memoModel.closeDb();
   }
