@@ -10,6 +10,9 @@ export class MemoController {
   async showMemos() {
     try {
       const memos = await this.memoModel.getAllQuery("SELECT * FROM memos");
+      if (!memos || memos.length === 0) {
+        throw new Error("No memos available to display.");
+      }
       memos.forEach((memo) => {
         const firstLine = memo.title.split("\n")[0];
         console.log(firstLine);
@@ -25,6 +28,9 @@ export class MemoController {
   async showMemo() {
     try {
       const memos = await this.memoModel.getAllQuery("SELECT * FROM memos");
+      if (!memos || memos.length === 0) {
+        throw new Error("No memos available to display.");
+      }
       await memoStdin.selectMemo(memos);
     } catch (err) {
       if (err instanceof Error) {

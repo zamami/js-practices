@@ -27,11 +27,6 @@ export class MemoStdin {
 
   createPrompt(memos, message, nameProperty) {
     return new Promise((resolve, reject) => {
-      if (!memos || memos.length === 0) {
-        reject(new Error("No memos available to display."));
-        return;
-      }
-
       const promptMemos = memos.map((memo) => {
         const firstLine = memo.title.split(`\n`)[0];
         return { name: memo[nameProperty], message: firstLine };
@@ -44,12 +39,12 @@ export class MemoStdin {
       });
 
       prompt
-          .run()
-          .then((answer) => resolve(answer))
-          .catch((error) => {
-            console.error("An error occurred while selecting a memo:", error);
-            reject(error);
-          });
+        .run()
+        .then((answer) => resolve(answer))
+        .catch((err) => {
+          console.error("An error occurred while selecting a memo:", err);
+          reject(err);
+        });
     });
   }
 
