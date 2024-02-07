@@ -1,11 +1,11 @@
 import { MemoModel } from "./memo_model.js";
-import { MemoStdin } from "./memo_stdin.js";
+import { PromptHandler } from "./prompt_handler.js";
 
-const memoStdin = new MemoStdin();
+const promptHandler = new PromptHandler();
 export class MemoController {
   constructor() {
     this.memoModel = new MemoModel();
-    this.memoStdin = new MemoStdin();
+    this.promptHandler = new PromptHandler();
   }
   async showMemos() {
     try {
@@ -29,7 +29,7 @@ export class MemoController {
       if (!memos || memos.length === 0) {
         throw new Error("No memos available to display.");
       }
-      await memoStdin.selectMemo(memos);
+      await promptHandler.selectMemo(memos);
     } catch (err) {
       console.error(err.message);
     }
@@ -39,7 +39,7 @@ export class MemoController {
   async deleteMemo() {
     try {
       const memos = await this.memoModel.getAllQuery("SELECT * FROM memos");
-      const selectedId = await this.memoStdin.deleteMemo(memos);
+      const selectedId = await this.promptHandler.deleteMemo(memos);
       await this.memoModel.deleteQuery(selectedId);
     } catch (err) {
       console.error(err.message);
@@ -70,7 +70,7 @@ export class MemoController {
   }
 
   async handleUserInput() {
-    const lines = await this.memoStdin.showLines();
+    const lines = await this.promptHandler.showLines();
     await this.addMemo(lines);
   }
 }

@@ -2,7 +2,7 @@ import readline from "readline";
 import pkg from "enquirer";
 
 const { Select } = pkg;
-export class MemoStdin {
+export class PromptHandler {
   constructor() {
     this.lines = [];
   }
