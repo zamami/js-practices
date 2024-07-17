@@ -1,15 +1,15 @@
-import { MemoModel } from "./memo_model.js";
+import { MemoRepository } from "./memo_repository.js";
 import { PromptHandler } from "./prompt_handler.js";
 
-const promptHandler = new PromptHandler();
 export class MemoController {
   constructor() {
-    this.memoModel = new MemoModel();
+    this.memoRepository = new MemoRepository();
     this.promptHandler = new PromptHandler();
   }
+
   async showMemos() {
     try {
-      const memos = await this.memoModel.getAllQuery("SELECT * FROM memos");
+      const memos = await this.memoRepository.getAllMemos();
       if (!memos || memos.length === 0) {
         throw new Error("No memos available to display.");
       }
@@ -20,53 +20,43 @@ export class MemoController {
     } catch (err) {
       console.error(err.message);
     }
-    await this.memoModel.closeDb();
+    await this.memoRepository.dbHandler.closeDb();
   }
 
   async showMemo() {
     try {
-      const memos = await this.memoModel.getAllQuery("SELECT * FROM memos");
+      const memos = await this.memoRepository.getAllMemos();
       if (!memos || memos.length === 0) {
         throw new Error("No memos available to display.");
       }
-      await promptHandler.selectMemo(memos);
+      await this.promptHandler.selectMemo(memos);
     } catch (err) {
       console.error(err.message);
     }
-    await this.memoModel.closeDb();
+    await this.memoRepository.dbHandler.closeDb();
   }
 
   async deleteMemo() {
     try {
-      const memos = await this.memoModel.getAllQuery("SELECT * FROM memos");
+      const memos = await this.memoRepository.getAllMemos();
       const selectedId = await this.promptHandler.deleteMemo(memos);
-      await this.memoModel.deleteQuery(selectedId);
+      await this.memoRepository.deleteMemo(selectedId);
     } catch (err) {
       console.error(err.message);
     }
-    await this.memoModel.closeDb();
+    await this.memoRepository.dbHandler.closeDb();
   }
 
   async addMemo(lines) {
-    await this.memoModel.runQuery(
-      "CREATE TABLE IF NOT EXISTS memos (id INTEGER PRIMARY KEY AUTOINCREMENT, title TEXT NOT NULL UNIQUE)"
-    );
+    await this.memoRepository.createTable();
     try {
-      await this.memoModel.runQuery("INSERT INTO memos (title) VALUES (?)", [
-        lines.join("\n"),
-      ]);
-    } catch (err) {
-      console.error(err.message);
-    }
-    try {
-      const memo = await this.memoModel.getQuery(
-        "SELECT * FROM memos WHERE id = last_insert_rowid()"
-      );
+      const lastID = await this.memoRepository.addMemo(lines.join("\n"));
+      const memo = await this.memoRepository.getMemoById(lastID);
       console.log(`メモを追加しました：${memo.title}`);
     } catch (err) {
       console.error(err.message);
     }
-    await this.memoModel.closeDb();
+    await this.memoRepository.dbHandler.closeDb();
   }
 
   async handleUserInput() {

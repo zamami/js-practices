@@ -1,8 +1,8 @@
 import sqlite3 from "sqlite3";
 
-export class MemoModel {
-  constructor() {
-    this.db = new (sqlite3.verbose().Database)("memo_app.db");
+export class DatabaseHandler {
+  constructor(dbFilePath) {
+    this.db = new (sqlite3.verbose().Database)(dbFilePath);
   }
 
   runQuery(query, params = []) {
@@ -39,11 +39,6 @@ export class MemoModel {
         }
       });
     });
-  }
-
-  deleteQuery(id) {
-    const sql = "DELETE FROM memos WHERE id = ?";
-    return this.runQuery(sql, [id]);
   }
 
   closeDb() {
