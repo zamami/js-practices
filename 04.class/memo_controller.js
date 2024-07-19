@@ -8,6 +8,7 @@ export class MemoController {
   }
 
   async showMemos() {
+    await this.memoRepository.createTable();
     try {
       const memos = await this.memoRepository.getAllMemos();
       if (!memos || memos.length === 0) {
@@ -24,6 +25,7 @@ export class MemoController {
   }
 
   async showMemo() {
+    await this.memoRepository.createTable();
     try {
       const memos = await this.memoRepository.getAllMemos();
       if (!memos || memos.length === 0) {
@@ -37,6 +39,7 @@ export class MemoController {
   }
 
   async deleteMemo() {
+    await this.memoRepository.createTable();
     try {
       const memos = await this.memoRepository.getAllMemos();
       const selectedId = await this.promptHandler.deleteMemo(memos);
